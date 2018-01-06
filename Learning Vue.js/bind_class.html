@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bind Class</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="square" :class="{blue: cold, red: hot}"></div>
+        <div :class="cssClasses"></div>
+        <input type="text" v-model="bgColorClass">
+        <div :class="[squareClass, bgColorClass,{'dashed-border': selected}]"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script>
+        // our VueJs instance bound to the div with an id of vue-instance
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                cold: true,
+                hot: false,
+                cssClasses: {
+                    square: true,
+                    'dashed-border': true
+                },
+                squareClass: 'square',
+                bgColorClass: 'red',
+                selected: true
+            }
+        });
+    </script>
+    <style>
+        .square {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        
+        .blue {
+            background-color: blue;
+        }
+        
+        .red {
+            background-color: red;
+        }
+        
+        .yellow {
+            background-color: yellow;
+        }
+        
+        .dashed-border {
+            border: dashed 4px black;
+        }
+    </style>
+</body>
+
+</html>
