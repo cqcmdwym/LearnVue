@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Event Handler</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <form>
+            <button v-if="!isLogged" @click="Login('mike', $event)">Log in</button>
+            <button v-else @click.prevent="Logout">Log out</button>
+            <p>{{message}}</p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script>
+        // our VueJs instance bound to the div with an id of vue-instance
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isLogged: false,
+                message: ''
+            },
+            methods: {
+                Login: function(username, event) {
+                    event && event.preventDefault(); //vue 1.0此语句不需要，默认会调用
+                    this.isLogged = true;
+                    this.message = "Welcome " + username;
+                },
+                Logout: function() {
+                    this.isLogged = false;
+                    this.message = "So long";
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
