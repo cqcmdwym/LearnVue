@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Watches</title>
+</head>
+
+<body>
+
+    <div id="app">
+        Got a question for our virtual agent? Just ask!
+        <input type="text" v-model="question"> {{response}}
+        <ul>
+            <li v-for="product in products">{{product.name}}</li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script>
+        // our VueJs instance bound to the div with an id of vue-instance
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                question: '',
+                response: '',
+                products: []
+            },
+            // computed:{
+            //     products: function(){
+            //         //this needs to return a value immediatedly, can't wait for Ajax response
+            //     }
+            // },
+            watch: {
+                question: function(newValue) {
+                    if (newValue.indexOf('products') > -1) {
+                        this.response = 'Sure';
+                        $.getJSON('https://hplussport.com/api/products')
+                            .done(function(data) {
+                                vm.products = data;
+                            })
+                    } else {
+                        this.response = 'Sorry';
+                        this.products = [];
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+
+</html>
