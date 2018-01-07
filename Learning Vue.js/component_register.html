@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Component</title>
+</head>
+
+<body>
+
+    <div id="app">
+        {{num}}
+        <global-component></global-component>
+        <local-component></local-component>
+        <local-component></local-component>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script>
+        Vue.component('global-component', {
+            template: '<div>global component</div>'
+        });
+
+        //模版只能有一个root节点,子component不能访问父component的data
+        // var LocalComponent = {
+        //     template: '<div>\
+        //                 local component\
+        //                 <div>{{num}}</div>\
+        //             </div>',
+        //     data: function() {
+        //         return {
+        //             num: 11
+        //         }
+        //     }
+        // };
+
+        var LocalComponent = {
+            template: '<div @click="showNum()">\
+                        local component\
+                    </div>',
+            data: function() {
+                return {
+                    num: Math.random()
+                }
+            },
+            methods: {
+                showNum: function() {
+                    alert('My number is ' + this.num);
+                }
+            }
+        };
+        // our VueJs instance bound to the div with an id of vue-instance
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                num: 42
+            },
+            components: {
+                'local-component': LocalComponent
+            }
+        });
+    </script>
+
+    <style>
+        div#app {
+            border: none;
+        }
+        
+        div {
+            border: solid 2px black;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+    </style>
+</body>
+
+</html>
