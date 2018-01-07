@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Component</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- theTitle must be the-title -->
+        <product-list :products="theProducts" the-title="Shop our award-winning product line"></product-list>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <script>
+        Vue.component('product-list', {
+                template: '<div class="product-list">\
+                        <h2>{{theTitle}}</h2>\
+                        <ul>\
+                            <li v-for="product in products">\
+                                <img :src="product.image">\
+                                <p><strong>{{product.name}}</strong></p>\
+                                <p>{{product.description}}</p>\
+                            </li>\
+                        </ul>\
+                </div>',
+                props: ['theTitle', 'products']
+            })
+            // our VueJs instance bound to the div with an id of vue-instance
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                theProducts: []
+            },
+            created: function() {
+                $.getJSON('https://hplussport.com/api/products')
+                    .done(function(data) {
+                        vm.theProducts = data;
+                    })
+            }
+        });
+    </script>
+
+    <style>
+        .product-list h2 {
+            margin-bottom: 40px;
+        }
+        
+        .product-list ul img {
+            float: left;
+            width: 300px;
+        }
+        
+        .product-list ul {
+            list-style-type: none;
+        }
+        
+        .product-list li {
+            margin-bottom: 40px;
+        }
+    </style>
+</body>
+
+</html>
